@@ -1,3 +1,23 @@
-h1 {
-  color: blue;
+html, body {
+  height: 100%;
+}
+
+body {
+  font-size: 16px;
+  font-family: 'MedievalSharp', cursive;
+  background: url(../images/background.jpg) center center no-repeat;
+  background-size: cover;
+}
+
+header {
+  padding: 20px 0;
+  background: #3B0B0B;
+  text-align: center;
+}
+
+
+
+header h1 {
+  font-size: 28px;
+  color: white;
 }
