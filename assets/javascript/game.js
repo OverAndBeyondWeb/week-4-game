@@ -80,7 +80,7 @@ var stannis = {
 };
 
 var petyr = {
-  name: 'Petyr Baelish,',
+  name: 'Petyr Baelish',
   healthPoints: 100,
   attackPower: 8,
   counterAttackPower: 6,
@@ -104,10 +104,18 @@ var characters = [
 characters.forEach(function(item) {
   var character = '<li><span>' + item.name + '</span><div class="char-img"><img src="assets/images/' + item.image + '"></div><span>' + item.healthPoints + '</span></li>';
   if (item.morality === 'good') {
-    $('#good-guys').append(character);
+    $('.good-guys').append(character);
   } else if (item.morality === 'evil') {
-    $('#bad-guys').append(character);
+    $('.bad-guys').append(character);
   }
   
+});
+
+$('.good-guys li').click(function() {
+  console.log($(this));
+  $('.good-guys li').not($(this)).animate({opacity: 0});
+
+  $(this).addClass('selected');
+  $('.bad-guys').addClass('enemies-selected');
 });
 

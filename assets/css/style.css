@@ -21,8 +21,8 @@ header h1 {
 }
 
 .characters li {
+  display: inline-block;
   width: 150px;
-  float: right;
   text-align: center;
   color: white;
   text-shadow: 1px 1px 2px #3A2919;
@@ -32,16 +32,21 @@ header h1 {
   height: 20px;
 }
 
-#good-guys {
+.good-guys {
   position: absolute;
   top: 100px;
   left: 20px;
 }
 
-#bad-guys {
+.good-guys li {
+  transition: all 3s;
+}
+
+.bad-guys {
   position: absolute;
   bottom: 20px;
   right: 20px;
+  transition: all 3s;
 }
 
 .char-img {
@@ -57,4 +62,12 @@ header h1 {
   height: 100%;
   width: 100%;
   border-radius: 50%;
+}
+
+.selected {
+  transform: scale(2) translate(200%, 100%);
+}
+
+.enemies-selected {
+  transform: translate(-30%, -300%);
 }
