@@ -65,9 +65,9 @@ header h1 {
 }
 
 .selected {
-  transform: scale(2) translate(200%, 100%);
+  transform: scale(2) translate(100%, 100%);
 }
 
 .enemies-selected {
-  transform: translate(-30%, -300%);
+  transform: translate(-25%, -150%);
 }

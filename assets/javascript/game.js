@@ -62,12 +62,12 @@ var gregor = {
 };
 
 var melisandre = {
-  name: 'Cersei Lannister',
+  name: 'Melisandre',
   healthPoints: 100,
   attackPower: 8,
   counterAttackPower: 6,
   morality: 'evil',
-  image: 'cersei-lannister.jpg'
+  image: 'melisandre.jpg'
 };
 
 var stannis = {
