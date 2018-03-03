@@ -152,7 +152,18 @@ $('.good-guys li').click(function() {
   $('.second-instruction').delay(8000).fadeIn(6000);
   $('.third-instruction').delay(20000).fadeIn(8000);
 
-  // Logic
-  var game = new Game('hero that is clicked');
+  /************ Logic *************/
+
+  //choose hero object based on text of first child of li that was clicked
+  var heroName = $(this).children(':first-child').text();
+
+  //creates a 1 item array then extracts the 1 item
+  var hero = characters.filter(function(item) {
+    return item.name === heroName;
+  })[0];
+
+  //new Game object initiated with the hero that was clicked on
+  var game = new Game(hero);
+
 });
 
