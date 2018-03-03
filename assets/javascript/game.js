@@ -73,6 +73,7 @@ $(document).ready(function() {
   // add characters to the document
   Character.prototype.characters.forEach(function(item) {
     var character = '<li><span>' + item.name + '</span><div class="char-img"><img src="assets/images/' + item.image + '"></div><span>' + item.healthPoints + '</span></li>';
+    //character.data('name', item.name);
     if (item.morality === 'good') {
       $('.good-guys').append(character);
     } else if (item.morality === 'evil') {
@@ -80,20 +81,14 @@ $(document).ready(function() {
     }
   });
 
+
+
+
+
   //click handler to start a game
   $('.good-guys li').click(function() {
 
-    // What happens in the UI
-    $('.good-guys li').not($(this)).animate({opacity: 0});
-
-    $(this).addClass('selected');
-    $('.bad-guys').addClass('enemies-selected');
-
-    $('.first-instruction').delay(2500).fadeOut(8000);
-    $('.second-instruction').delay(8000).fadeIn(6000);
-    $('.third-instruction').delay(20000).fadeIn(8000);
-
-    /************ Logic *************/
+     /************ Logic *************/
 
     //get hero name from text of first child of li that was clicked
     var heroName = $(this).children(':first-child').text();
@@ -105,6 +100,38 @@ $(document).ready(function() {
 
     //new Game object initiated with the hero that was clicked on
     var game = new Game(hero, hero.characters);
+
+    // What happens in the UI
+    $('.good-guys li').not($(this)).animate({opacity: 0});
+
+    $(this).addClass('selected');
+    
+    jQuery.each($('.bad-guys li'), function(index, value) {
+
+      var el = $(value).find('span:first-child'),
+        currentEnemyNames = game.enemies.map(function(item) {
+          return item.name;
+        });
+      console.log(currentEnemyNames);
+      console.log(this);
+      if (currentEnemyNames.indexOf(el.text()) === -1) {
+        $(this).animate({opacity: 0});
+      } else {
+        $(this).addClass('enemies-selected');
+      }
+    });
+
+    
+    
+    
+    
+    
+
+    $('.first-instruction').delay(2500).fadeOut(8000);
+    $('.second-instruction').delay(8000).fadeIn(6000);
+    $('.third-instruction').delay(20000).fadeIn(8000);
+
+   
   });
 });
 
