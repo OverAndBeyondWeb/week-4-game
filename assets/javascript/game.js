@@ -3,6 +3,8 @@
 var Game = function(hero) {
   this.hero = hero;
   this.enemies = [];
+  this.chooseEnemies();
+  console.log(this);
 }
 
 //Game prototype methods
@@ -140,7 +142,7 @@ characters.forEach(function(item) {
 });
 
 $('.good-guys li').click(function() {
-  console.log($(this));
+  // What happens in the UI
   $('.good-guys li').not($(this)).animate({opacity: 0});
 
   $(this).addClass('selected');
@@ -149,5 +151,8 @@ $('.good-guys li').click(function() {
   $('.first-instruction').delay(2500).fadeOut(8000);
   $('.second-instruction').delay(8000).fadeIn(6000);
   $('.third-instruction').delay(20000).fadeIn(8000);
+
+  // Logic
+  var game = new Game('hero that is clicked');
 });
 
