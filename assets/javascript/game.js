@@ -1,3 +1,31 @@
+//Game factory function
+
+var Game = function(hero) {
+  this.hero = hero;
+  this.enemies = [];
+}
+
+//Game prototype methods
+
+Game.prototype.chooseEnemies = function() {
+  console.log('enemies chosen');
+}
+Game.prototype.declareWin = function() {
+  console.log('you win');
+}
+Game.prototype.declareLoss = function() {
+  console.log('you lose');
+}
+
+
+
+
+
+
+
+
+
+
 var daenerys = {
   name: 'Daenerys Targaryen',
   healthPoints: 100,
@@ -117,5 +145,9 @@ $('.good-guys li').click(function() {
 
   $(this).addClass('selected');
   $('.bad-guys').addClass('enemies-selected');
+
+  $('.first-instruction').delay(2500).fadeOut(8000);
+  $('.second-instruction').delay(8000).fadeIn(6000);
+  $('.third-instruction').delay(20000).fadeIn(8000);
 });
 

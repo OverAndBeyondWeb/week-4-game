@@ -71,3 +71,19 @@ header h1 {
 .enemies-selected {
   transform: translate(-25%, -150%);
 }
+
+.instructions {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.instructions h1 {
+  font-family: 'Lora', serif;
+  font-size: 36px;
+  color: white;
+  text-shadow: 1px 1px 2px #3A2919;
+}
+
+.second-instruction, .third-instruction {
+  display: none;
+}
