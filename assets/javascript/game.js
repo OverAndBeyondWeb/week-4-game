@@ -1,20 +1,32 @@
 //Game factory function
-
-var Game = function(hero) {
+var Game = function(hero, characters) {
   this.hero = hero;
   this.enemies = [];
-  this.chooseEnemies();
-  console.log(this);
+  this.chooseEnemies(characters);
 };
 
 //Game prototype methods
+Game.prototype.chooseEnemies = function(characters) {
 
-Game.prototype.chooseEnemies = function() {
-  console.log('enemies chosen');
-}
+  //filter out evil characters
+  var enemies = characters.filter(function(character) {
+    return character.morality === 'evil';
+  });
+  
+  //choose 3 evil characters randomly
+  while (this.enemies.length < 3) {
+    var randomEnemy = enemies[Math.floor(Math.random() * enemies.length)];
+    if (this.enemies.indexOf(randomEnemy) === -1) {
+      this.enemies.push(randomEnemy);
+    }
+     
+  }  
+};
+
 Game.prototype.declareWin = function() {
   console.log('you win');
-}
+};
+
 Game.prototype.declareLoss = function() {
   console.log('you lose');
 }
@@ -92,8 +104,7 @@ $(document).ready(function() {
     })[0];
 
     //new Game object initiated with the hero that was clicked on
-    var game = new Game(hero);
-
+    var game = new Game(hero, hero.characters);
   });
 });
 
