@@ -63,11 +63,11 @@ Character.prototype.chooseAnOpponent = function(opponentThatWasClicked) {
 
   $('.evil .character').off();
 
-  var thisCharacter = this;
+  var hero = this;
 
   $('.attack-btn').click(function() {
 
-    thisCharacter.attack(opponent, opponentThatWasClicked);
+    hero.attack(opponent, opponentThatWasClicked);
 
   });
 };
@@ -103,9 +103,19 @@ Character.prototype.attack = function(opponent, opponentNode) {
     
   }else {
     opponentNode.find('span:last-child').text(opponent.healthPoints);
+    setTimeout(function() {
+      opponent.counterAttack(hero)
+    }, 200);
   }
 
   
+};
+
+Character.prototype.counterAttack = function(opponent) {
+  alert('you have been hit, ' + opponent.name);
+  opponent.healthPoints -= this.counterAttackPower;
+  console.log($('.character').has('button').find('span').eq(1).text(opponent.healthPoints));
+  console.log($('.character:has(button)'));
 };
 
 
