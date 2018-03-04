@@ -67,7 +67,7 @@ var daenerys = new Character('Daenerys Targaryen', 100, 8, 6,'good', 'daenerys-t
   jon = new Character('Jon Snow', 100, 8, 6,'good', 'jon-snow.jpg'),
   eddard = new Character('Eddard Stark', 100, 8, 6,'good', 'eddard-stark.jpg'),
   brienne = new Character('Brienne of Tarth', 100, 8, 6, 'good', 'brienne-of-tarth.jpg'),
-  bronn = new Character('Bronn      ', 100, 8, 6, 'good', 'bronn.jpg'),
+  bronn = new Character('Bronn', 100, 8, 6, 'good', 'bronn.jpg'),
   cersei = new Character('Cersei Lannister', 100, 8, 6, 'evil', 'cersei-lannister.jpg'),
   gregor = new Character('Gregor Clegane', 100, 8, 6, 'evil', 'gregor-clegane.jpg'),
   melisandre = new Character('Melisandre', 100, 8, 6, 'evil', 'melisandre.jpg'),
@@ -136,10 +136,27 @@ $(document).ready(function() {
 
     $('.evil .character').click(function() {
       $(this).find('img').css( "border-color", "green" );
+
+      var opponentNode = $(this);
+      var opponent = Character.prototype.characters.filter(function(item) {
+        return item.name === opponentNode.find('span:first-child').text();
+      })[0];
+
       $('.evil .character').off();
 
       $('.attack-btn').click(function() {
-        alert('attack');
+        console.log(hero, opponent);
+        opponent.healthPoints -= hero.attackPower;
+        if (opponent.healthPoints < 1) {
+          opponentNode.animate({opacity: 0}, 1000).animate({width: [0, 'linear']}, 2000);
+          $(this).off();
+          alert('Choose another enemy');
+
+        }else {
+          opponentNode.find('span:last-child').text(opponent.healthPoints);
+        }
+        
+
       });
     });
 
