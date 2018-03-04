@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   height: 100%;
 }
@@ -20,40 +24,117 @@ header h1 {
   color: white;
 }
 
-.characters li {
-  display: inline-block;
-  width: 150px;
+main {
+  height: calc(100% - 68px);
+}
+
+.instructions {
+  text-align: center;
+}
+
+.instructions h1 {
+  font-family: 'Lora', serif;
+  font-size: 36px;
+  color: white;
+  text-shadow: 1px 1px 2px #3A2919;
+  padding-top: 25px;
+}
+
+.second-instruction, .third-instruction {
+  display: none;
+}
+
+.game-play {
+  width: 100%;
+  height: calc(100% - 61px);
+  position: relative;
+}
+
+.game-play::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.good {
+  width: 50%;
+  height: 100%;
+  padding: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.evil {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.character {
+  width: 10%;
+  position: absolute;
+  font-size: 14px;
   text-align: center;
   color: white;
   text-shadow: 1px 1px 2px #3A2919;
 }
 
-.characters span {
-  height: 20px;
+.good .character:first-child {
+  right: 88%;
+  top: 20px;
 }
 
-.good-guys {
-  position: absolute;
-  top: 100px;
-  left: 20px;
+.good .character:nth-child(2) {
+  right: 76%;
+  top: 20px;
 }
 
-.good-guys li {
-  transition: all 3s;
+.good .character:nth-child(3) {
+  right: 64%;
+  top: 20px;
 }
 
-.bad-guys {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  transition: all 3s;
+.good .character:nth-child(4) {
+  right: 53%;
+  top: 20px;
+}
+
+.good .character:last-child {
+  right: 42%;
+  top: 20px;
+}
+
+.evil .character:first-child {
+  left: 42%;
+  bottom: 40px;
+}
+
+.evil .character:nth-child(2) {
+  left: 53%;
+  bottom: 40px;
+}
+
+.evil .character:nth-child(3) {
+  left: 64%;
+  bottom: 40px;
+}
+
+.evil .character:nth-child(4) {
+  left: 76%;
+  bottom: 40px;
+}
+
+.evil .character:last-child {
+  left: 88%;
+  bottom: 40px;
 }
 
 .char-img {
-  height: 100px;
-  width: 100px;
+  width: 100%;
   border-radius: 50%;
-  border: 2px solid red;
   margin: 10px auto;
   cursor: pointer;
 }
@@ -62,6 +143,7 @@ header h1 {
   height: 100%;
   width: 100%;
   border-radius: 50%;
+  border: 2px solid red;
 }
 
 .selected {
@@ -72,18 +154,3 @@ header h1 {
   transform: translate(-25%, -150%);
 }
 
-.instructions {
-  text-align: center;
-  margin-top: 25px;
-}
-
-.instructions h1 {
-  font-family: 'Lora', serif;
-  font-size: 36px;
-  color: white;
-  text-shadow: 1px 1px 2px #3A2919;
-}
-
-.second-instruction, .third-instruction {
-  display: none;
-}

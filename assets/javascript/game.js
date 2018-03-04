@@ -59,7 +59,7 @@ var daenerys = new Character('Daenerys Targaryen', 100, 8, 6,'good', 'daenerys-t
   jon = new Character('Jon Snow', 100, 8, 6,'good', 'jon-snow.jpg'),
   eddard = new Character('Eddard Stark', 100, 8, 6,'good', 'eddard-stark.jpg'),
   brienne = new Character('Brienne of Tarth', 100, 8, 6, 'good', 'brienne-of-tarth.jpg'),
-  bronn = new Character('Bronn', 100, 8, 6, 'good', 'bronn.jpg'),
+  bronn = new Character('Bronn      ', 100, 8, 6, 'good', 'bronn.jpg'),
   cersei = new Character('Cersei Lannister', 100, 8, 6, 'evil', 'cersei-lannister.jpg'),
   gregor = new Character('Gregor Clegane', 100, 8, 6, 'evil', 'gregor-clegane.jpg'),
   melisandre = new Character('Melisandre', 100, 8, 6, 'evil', 'melisandre.jpg'),
@@ -72,12 +72,11 @@ $(document).ready(function() {
  
   // add characters to the document
   Character.prototype.characters.forEach(function(item) {
-    var character = '<li><span>' + item.name + '</span><div class="char-img"><img src="assets/images/' + item.image + '"></div><span>' + item.healthPoints + '</span></li>';
-    //character.data('name', item.name);
+    var character = '<div class="character"><span>' + item.name + '</span><div class="char-img"><img src="assets/images/' + item.image + '"></div><span>' + item.healthPoints + '</span></div>';
     if (item.morality === 'good') {
-      $('.good-guys').append(character);
+      $('.good').append(character);
     } else if (item.morality === 'evil') {
-      $('.bad-guys').append(character);
+      $('.evil').append(character);
     }
   });
 
@@ -86,7 +85,7 @@ $(document).ready(function() {
 
 
   //click handler to start a game
-  $('.good-guys li').click(function() {
+  $('.good .character').click(function() {
 
      /************ Logic *************/
 
@@ -102,36 +101,25 @@ $(document).ready(function() {
     var game = new Game(hero, hero.characters);
 
     // What happens in the UI
-    $('.good-guys li').not($(this)).animate({opacity: 0});
+    $('.good .character').not($(this)).animate({opacity: 0});
 
-    $(this).addClass('selected');
+    $(this).animate({right: '10%', top: '150px', width: '20%'});
     
-    jQuery.each($('.bad-guys li'), function(index, value) {
+    jQuery.each($('.evil .character'), function(index, value) {
 
       var el = $(value).find('span:first-child'),
         currentEnemyNames = game.enemies.map(function(item) {
           return item.name;
         });
-      console.log(currentEnemyNames);
-      console.log(this);
+      
       if (currentEnemyNames.indexOf(el.text()) === -1) {
-        $(this).animate({opacity: 0});
+        $(this).animate({opacity: 0}, 1000).animate({width: [0, 'linear']}, 2000);
+        
       } else {
-        $(this).addClass('enemies-selected');
+        $(this).animate({left: '-=50%', bottom: '+=40%', width: '16%'});
       }
+
     });
-
-    
-    
-    
-    
-    
-
-    $('.first-instruction').delay(2500).fadeOut(8000);
-    $('.second-instruction').delay(8000).fadeIn(6000);
-    $('.third-instruction').delay(20000).fadeIn(8000);
-
-   
   });
 });
 
