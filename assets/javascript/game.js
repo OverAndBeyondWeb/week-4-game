@@ -41,6 +41,7 @@ var Character = function(name, healthPoints, attackPower, counterAttackPower, mo
     this.counterAttackPower = counterAttackPower;
     this.morality = morality;
     this.image = image;
+    this.battlesWon = 0;
     this.registerForGame();
 };
 
@@ -56,8 +57,22 @@ Character.prototype.chooseAnOpponent = function() {
   this.characters.push(this);
 };
 
-Character.prototype.attack = function() {
-  this.characters.push(this);
+Character.prototype.attack = function(opponent, opponentNode) {
+  console.log(opponent);
+  opponent.healthPoints -= this.attackPower;
+        if (opponent.healthPoints < 1) {
+          opponentNode.animate({opacity: 0}, 1000).animate({width: [0, 'linear']}, 2000);
+          $(this).off();
+          this.battlesWon++;
+          opponentNode.find('span:last-child').text(0);
+          setTimeout(function() {
+            alert('Choose another enemy, you hav won ' + this.battlesWon + ' battles')
+          }, 0);
+          
+
+        }else {
+          opponentNode.find('span:last-child').text(opponent.healthPoints);
+        }
 };
 
 
@@ -145,17 +160,9 @@ $(document).ready(function() {
       $('.evil .character').off();
 
       $('.attack-btn').click(function() {
-        console.log(hero, opponent);
-        opponent.healthPoints -= hero.attackPower;
-        if (opponent.healthPoints < 1) {
-          opponentNode.animate({opacity: 0}, 1000).animate({width: [0, 'linear']}, 2000);
-          $(this).off();
-          alert('Choose another enemy');
 
-        }else {
-          opponentNode.find('span:last-child').text(opponent.healthPoints);
-        }
         
+        hero.attack(opponent, opponentNode);
 
       });
     });
