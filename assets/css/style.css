@@ -146,11 +146,15 @@ main {
   border: 2px solid red;
 }
 
-.selected {
-  transform: scale(2) translate(100%, 100%);
-}
-
-.enemies-selected {
-  transform: translate(-25%, -150%);
+.attack-btn {
+  display: block;
+  font-family: inherit;
+  font-weight: bold;
+  background-color: #666666;
+  color: transparent;
+  text-shadow: rgba(255,255,255,0.5) 0px 3px 3px;
+  border: none;
+  margin: 20px auto;
+  cursor: pointer;
 }
 

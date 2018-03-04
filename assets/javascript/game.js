@@ -52,6 +52,14 @@ Character.prototype.registerForGame = function() {
   this.characters.push(this);
 };
 
+Character.prototype.chooseAnOpponent = function() {
+  this.characters.push(this);
+};
+
+Character.prototype.attack = function() {
+  this.characters.push(this);
+};
+
 
 // initialize characters
 
@@ -65,6 +73,8 @@ var daenerys = new Character('Daenerys Targaryen', 100, 8, 6,'good', 'daenerys-t
   melisandre = new Character('Melisandre', 100, 8, 6, 'evil', 'melisandre.jpg'),
   stannis = new Character('Stannis Baratheon', 100, 8, 6, 'evil', 'stannis-baratheon.jpg'),
   petyr = new Character('Petyr Baelish', 100, 8, 6, 'evil', 'petyr-baelish.jpg');
+
+
 
 
 // wait for document to load
@@ -103,7 +113,8 @@ $(document).ready(function() {
     // What happens in the UI
     $('.good .character').not($(this)).animate({opacity: 0});
 
-    $(this).animate({right: '10%', top: '150px', width: '20%'});
+    $(this).animate({right: '10%', top: '150px', width: '20%'})
+        .append('<button class="attack-btn">ATTACK</button>');
     
     jQuery.each($('.evil .character'), function(index, value) {
 
@@ -116,10 +127,22 @@ $(document).ready(function() {
         $(this).animate({opacity: 0}, 1000).animate({width: [0, 'linear']}, 2000);
         
       } else {
-        $(this).animate({left: '-=50%', bottom: '+=40%', width: '16%'});
+        $(this).animate({left: '-=45%', bottom: '+=40%', width: '16%'});
       }
 
     });
+
+    $(this).off();
+
+    $('.evil .character').click(function() {
+      $(this).find('img').css( "border-color", "green" );
+      $('.evil .character').off();
+
+      $('.attack-btn').click(function() {
+        alert('attack');
+      });
+    });
+
   });
 });
 
