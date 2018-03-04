@@ -53,26 +53,59 @@ Character.prototype.registerForGame = function() {
   this.characters.push(this);
 };
 
-Character.prototype.chooseAnOpponent = function() {
-  this.characters.push(this);
+Character.prototype.chooseAnOpponent = function(opponentThatWasClicked) {
+  opponentThatWasClicked.find('img').css( "border-color", "green" );
+
+  var opponent = Character.prototype.characters.filter(function(item) {
+    return item.name === opponentThatWasClicked.find('span:first-child').text();
+  })[0];
+
+
+  $('.evil .character').off();
+
+  var thisCharacter = this;
+
+  $('.attack-btn').click(function() {
+
+    thisCharacter.attack(opponent, opponentThatWasClicked);
+
+  });
 };
 
 Character.prototype.attack = function(opponent, opponentNode) {
-  console.log(opponent);
+  var hero = this;
   opponent.healthPoints -= this.attackPower;
-        if (opponent.healthPoints < 1) {
-          opponentNode.animate({opacity: 0}, 1000).animate({width: [0, 'linear']}, 2000);
-          $(this).off();
-          this.battlesWon++;
-          opponentNode.find('span:last-child').text(0);
-          setTimeout(function() {
-            alert('Choose another enemy, you hav won ' + this.battlesWon + ' battles')
-          }, 0);
-          
-
-        }else {
-          opponentNode.find('span:last-child').text(opponent.healthPoints);
+  if (opponent.healthPoints < 1) {
+    opponentNode.animate({opacity: 0}, 1000).animate({width: [0, 'linear']}, 2000);
+    this.battlesWon++;
+    opponentNode.find('span:last-child').text(0);
+    if (this.battlesWon < 3) {
+      console.log($('attack-btn'));
+      $('.attack-btn').off();
+      $('.evil .character').click(function() {
+        
+        var characterToFight = $(this);
+        hero.chooseAnOpponent(characterToFight);
+      });
+      setTimeout(function() {
+        var singularOrPluralBattle;
+        if (hero.battlesWon > 1) {
+          singularOrPluralBattle = 'battles';
+        } else {
+          singularOrPluralBattle = 'battle';
         }
+        alert('Choose another enemy, you hav won ' + hero.battlesWon + ' ' + singularOrPluralBattle);
+        alert('choose another enemy to fight');
+      }, 0);
+    } else {
+      alert('you won, game ove , nice work!');
+    }
+    
+  }else {
+    opponentNode.find('span:last-child').text(opponent.healthPoints);
+  }
+
+  
 };
 
 
@@ -112,12 +145,13 @@ $(document).ready(function() {
   //click handler to start a game
   $('.good .character').click(function() {
 
-     /************ Logic *************/
+    
 
     //get hero name from text of first child of li that was clicked
     var heroName = $(this).children(':first-child').text();
 
-    //creates a 1 item array then extracts the 1 item
+    //creates a 1 item array then extracts the 1 item for a reference to
+    //the chosen good character
     var hero = Character.prototype.characters.filter(function(item) {
       return item.name === heroName;
     })[0];
@@ -125,46 +159,47 @@ $(document).ready(function() {
     //new Game object initiated with the hero that was clicked on
     var game = new Game(hero, hero.characters);
 
-    // What happens in the UI
+    // click to choose a good character, fade out the others
     $('.good .character').not($(this)).animate({opacity: 0});
 
+    //bring chosen character towards center of screen
+    //and add an attack button
     $(this).animate({right: '10%', top: '150px', width: '20%'})
         .append('<button class="attack-btn">ATTACK</button>');
-    
+
+    //
     jQuery.each($('.evil .character'), function(index, value) {
 
       var el = $(value).find('span:first-child'),
         currentEnemyNames = game.enemies.map(function(item) {
+          //creates an array of enemy names from the enemy objects
           return item.name;
         });
-      
+
+      //enemy elements that match the enemy objects of the current game
+      //are brought towards the center of the screen,the others fade out
       if (currentEnemyNames.indexOf(el.text()) === -1) {
-        $(this).animate({opacity: 0}, 1000).animate({width: [0, 'linear']}, 2000);
-        
+        $(this).animate({opacity: 0}, 1000).animate({width: [0, 'linear']}, 2000); 
       } else {
         $(this).animate({left: '-=45%', bottom: '+=40%', width: '16%'});
       }
 
     });
 
+    //remove click from chosen character element
     $(this).off();
 
+    //add click to remaining evil characters
     $('.evil .character').click(function() {
-      $(this).find('img').css( "border-color", "green" );
 
-      var opponentNode = $(this);
-      var opponent = Character.prototype.characters.filter(function(item) {
-        return item.name === opponentNode.find('span:first-child').text();
-      })[0];
+      //save a reference to the evil character element that was clicked
+      var characterToFight = $(this);
 
-      $('.evil .character').off();
+      //pass the evil character reference to the good character object
+      hero.chooseAnOpponent(characterToFight);
 
-      $('.attack-btn').click(function() {
-
-        
-        hero.attack(opponent, opponentNode);
-
-      });
+      //remove the click from all evil character elements
+      $(this).off();
     });
 
   });
