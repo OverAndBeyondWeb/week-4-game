@@ -114,8 +114,8 @@ Character.prototype.attack = function(opponent, opponentNode) {
 Character.prototype.counterAttack = function(opponent) {
   alert('you have been hit, ' + opponent.name);
   opponent.healthPoints -= this.counterAttackPower;
-  console.log($('.character').has('button').find('span').eq(1).text(opponent.healthPoints));
-  console.log($('.character:has(button)'));
+  $('.character').has('button').find('span').eq(1).text(opponent.healthPoints);
+  opponent.attackPower += 3;
 };
 
 
